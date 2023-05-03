@@ -138,6 +138,9 @@ export default class RapiDoc extends LitElement {
       focusedElementId: { type: String }, // updating the focusedElementId will automatically render appropriate section in focused mode
       showAdvancedSearchDialog: { type: Boolean },
       advancedSearchMatches: { type: Object },
+
+      // NHS specific
+      doApiCatalogueNavBarTweaks: { type: String, attribute: 'do-api-catalogue-nav-bar-tweaks' },
     };
   }
 
@@ -514,6 +517,8 @@ export default class RapiDoc extends LitElement {
 
     if (!this.showAdvancedSearchDialog) { this.showAdvancedSearchDialog = false; }
 
+    if (!this.doApiCatalogueNavBarTweaks || !'true, false,'.includes(`${this.doApiCatalogueNavBarTweaks},`)) { this.doApiCatalogueNavBarTweaks = 'false'; }
+
     if (!this.cssFile) { this.cssFile = null; }
     if (!this.cssClasses) { this.cssClasses = ''; }
 
@@ -577,7 +582,7 @@ export default class RapiDoc extends LitElement {
       }
     }
     if (name === 'render-style') {
-      if (newVal === 'read') {
+      if (newVal === 'read' && this.doApiCatalogueNavBarTweaks !== 'true') {
         window.setTimeout(() => {
           this.observeExpandedContent();
         }, 100);
@@ -768,7 +773,7 @@ export default class RapiDoc extends LitElement {
 
     // Initiate IntersectionObserver and put it at the end of event loop, to allow loading all the child elements (must for larger specs)
     this.intersectionObserver.disconnect();
-    if (this.renderStyle === 'read') {
+    if (this.renderStyle === 'read' && this.doApiCatalogueNavBarTweaks !== 'true') {
       await sleep(100);
       this.observeExpandedContent(); // This will auto-highlight the selected nav-item in read-mode
     }
