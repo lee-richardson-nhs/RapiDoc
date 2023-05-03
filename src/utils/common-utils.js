@@ -55,7 +55,7 @@ export function componentIsInSearch(searchVal, component) {
 
 export function pathIsInSearch(searchVal, path, matchType = 'includes') {
   if (matchType === 'includes') {
-    const stringToSearch = `${path.method} ${path.path} ${path.summary || path.description || ''} ${path.operationId || ''}`.toLowerCase();
+    const stringToSearch = `${path.method} ${path.path} ${path.summary} ${path.description} ${path.operationId || ''}`.toLowerCase();
     return stringToSearch.includes(searchVal.toLowerCase());
   }
   const regex = new RegExp(searchVal, 'i');
@@ -90,7 +90,7 @@ export function advancedSearch(searchVal, allSpecTags, searchOptions = []) {
         stringToSearch = path.path;
       }
       if (searchOptions.includes('search-api-descr')) {
-        stringToSearch = `${stringToSearch} ${path.summary || path.description || ''}`;
+        stringToSearch = `${stringToSearch} ${path.summary} ${path.description}`;
       }
       if (searchOptions.includes('search-api-params')) {
         stringToSearch = `${stringToSearch} ${path.parameters?.map((v) => v.name).join(' ') || ''}`;
