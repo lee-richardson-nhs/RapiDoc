@@ -96,18 +96,22 @@ export function advancedSearch(searchVal, allSpecTags, searchOptions = []) {
         stringToSearch = `${stringToSearch} ${path.parameters?.map((v) => v.name).join(' ') || ''}`;
       }
 
+      const getContentsSchemaKeySet = (obj) => {
+        const sets = Object.getOwnPropertyNames(obj?.content)
+          .map((contentType) => schemaKeys(obj.content[contentType].schema?.properties));
+        return new Set(sets.reduce((acc, set) => acc.concat([...set]), []));
+      };
+
       if (searchOptions.includes('search-api-request-body') && path.requestBody) {
-        let schemaKeySet = new Set();
-        for (const contentType in path.requestBody?.content) {
-          if (path.requestBody.content[contentType].schema?.properties) {
-            schemaKeySet = schemaKeys(path.requestBody.content[contentType].schema?.properties);
-          }
-          stringToSearch = `${stringToSearch} ${[...schemaKeySet].join(' ')}`;
-        }
+        stringToSearch = `${stringToSearch} ${[...getContentsSchemaKeySet(path.requestBody)].join(' ')}`;
       }
 
       if (searchOptions.includes('search-api-resp-descr')) {
         stringToSearch = `${stringToSearch} ${Object.values(path.responses).map((v) => v.description || '').join(' ')}`;
+
+        for (const responseType in path.responses) {
+          stringToSearch = `${stringToSearch} ${[...getContentsSchemaKeySet(path.responses[responseType])].join(' ')}`;
+        }
       }
 
       if (stringToSearch.toLowerCase().includes(searchVal.trim().toLowerCase())) {
