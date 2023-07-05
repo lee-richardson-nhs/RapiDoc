@@ -37,6 +37,11 @@ export default class JsonTree extends LitElement {
         direction: ltr; 
         text-align: left;
       }
+        
+      .scrollable-container {
+        height: 400px;
+        overflow: auto;
+      }
 
       .open-bracket {
         display:inline-block;
@@ -91,12 +96,14 @@ export default class JsonTree extends LitElement {
   /* eslint-disable indent */
   render() {
     return html`
-      <div class = "json-tree"  @click='${(e) => { if (e.target.classList.contains('btn-copy')) { copyToClipboard(JSON.stringify(this.data, null, 2), e); } else { this.toggleExpand(e); } }}'>
-        <div class='toolbar'> 
-          <button class="toolbar-btn btn-copy" part="btn btn-fill btn-copy"> Copy </button>
-        </div>
+      <div class = "scrollable-container">
+        <div class = "json-tree"  @click='${(e) => { if (e.target.classList.contains('btn-copy')) { copyToClipboard(JSON.stringify(this.data, null, 2), e); } else { this.toggleExpand(e); } }}'>
+          <div class='toolbar'>
+            <button class="toolbar-btn btn-copy" part="btn btn-fill btn-copy"> Copy </button>
+          </div>
           ${this.generateTree(this.data, true)}
-      </div>  
+        </div>
+      </div>
     `;
   }
 
