@@ -67,6 +67,7 @@ export default css`
 
   /* CSS var overrides */
   :host {
+    --font-size-large-nhs: 1.3rem;
     --font-size-regular: 1rem;
     --font-size-small: .888rem;
     --font-size-mono: 1rem;
