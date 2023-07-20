@@ -320,6 +320,13 @@ export default class ApiRequest extends LitElement {
       }`;
   }
 
+  shouldFillWithExample(paramName, paramType) {
+    if (paramType === 'header' && paramName === 'Authorization') {
+      return false;
+    }
+    return this.fillRequestFieldsWithExample === 'true';
+  }
+
   inputParametersTemplate(paramType) {
     const filteredParams = this.parameters ? this.parameters.filter((param) => param.in === paramType) : [];
     if (filteredParams.length === 0) {
@@ -423,7 +430,7 @@ export default class ApiRequest extends LitElement {
                     placeholder = "add-multiple &#x21a9;"
                     .value="${param['x-fill-example'] === 'no'
                       ? []
-                      : live(this.fillRequestFieldsWithExample === 'true' ? Array.isArray(example.exampleVal) ? example.exampleVal : [example.exampleVal] : [])
+                      : live(this.shouldFillWithExample(param.name, paramType) ? Array.isArray(example.exampleVal) ? example.exampleVal : [example.exampleVal] : [])
                     }"
                   >
                   </tag-input>`
@@ -453,7 +460,7 @@ export default class ApiRequest extends LitElement {
                             data-param-allow-reserved = "${paramAllowReserved}"
                             data-x-fill-example = "${param['x-fill-example'] || 'yes'}"
                             spellcheck = "false"
-                            .textContent="${param['x-fill-example'] === 'no' ? '' : live(this.fillRequestFieldsWithExample === 'true' ? example.exampleVal : '')}"
+                            .textContent="${param['x-fill-example'] === 'no' ? '' : live(this.shouldFillWithExample(param.name, paramType) ? example.exampleVal : '')}"
                             style = "resize:vertical; width:100%; height: ${'read focused'.includes(this.renderStyle) ? '180px' : '120px'};"
                             @input=${(e) => {
                               const requestPanelEl = this.getRequestPanel(e);
@@ -489,7 +496,7 @@ export default class ApiRequest extends LitElement {
                       data-param-allow-reserved = "${paramAllowReserved}"
                       data-x-fill-example = "${param['x-fill-example'] || 'yes'}"
                       data-array="false"
-                      .value="${param['x-fill-example'] === 'no' ? '' : live(this.fillRequestFieldsWithExample === 'true' ? example.exampleVal : '')}"
+                      .value="${param['x-fill-example'] === 'no' ? '' : live(this.shouldFillWithExample(param.name, paramType) ? example.exampleVal : '')}"
                       @input=${(e) => {
                         const requestPanelEl = this.getRequestPanel(e);
                         this.liveCURLSyntaxUpdate(requestPanelEl);
