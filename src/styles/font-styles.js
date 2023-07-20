@@ -30,6 +30,7 @@ export default css`
     font-size:calc(var(--font-size-small) + 1px); 
     font-weight:bold; 
   }
+  .large-font-size { font-size: var(--font-size-large-nhs); }
   .regular-font-size { font-size: var(--font-size-regular); }
   .small-font-size { font-size: var(--font-size-small); }
   .upper { text-transform: uppercase; }

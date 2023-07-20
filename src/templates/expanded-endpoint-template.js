@@ -91,15 +91,15 @@ export function expandedEndpointBodyTemplate(path, tagName = '', tagDescription 
         ${path.isWebhook
           ? html`<span part="section-operation-webhook" style="color:var(--primary-color); font-weight:bold; font-size: var(--font-size-regular);"> WEBHOOK </span>`
           : html`
-            <div part="section-operation-webhook-method" class="mono-font regular-font-size" style="text-align:left; direction:ltr; padding: 8px 0; color:var(--fg3)"> 
-              <span part="label-operation-method" class="regular-font upper method-fg bold-text ${path.method}">${path.method}</span> 
+            <div part="section-operation-webhook-method" class="mono-font large-font-size" style="text-align:left; direction:ltr; padding: 8px 20px 8px; border-radius: 8px; color:var(--selection-fg); background-color:var(--blue);"> 
+              <span part="label-operation-method" style="color: var(--selection-fg);" class="regular-font upper method-fg bold-text ${path.method}">${path.method}</span> 
               <span part="label-operation-path">${path.path}</span>
             </div>
           `
         }
         <slot name="${path.elementId}"></slot>`
       }
-      ${path.description ? html`<div class="m-markdown"> ${unsafeHTML(marked(path.description))}</div>` : ''}
+      ${path.description ? html`<div class="m-markdown" style="padding-top: 10px;"> ${unsafeHTML(marked(path.description))}</div>` : ''}
       ${pathSecurityTemplate.call(this, path.security)}
       ${path.externalDocs?.url || path.externalDocs?.description
         ? html`<div style="background-color:var(--bg3); padding:2px 8px 8px 8px; margin:8px 0; border-radius:var(--border-radius)"> 
