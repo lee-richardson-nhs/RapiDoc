@@ -109,7 +109,7 @@ export default class SchemaTree extends LitElement {
         </div>
         <span part="schema-description" class='m-markdown'> ${unsafeHTML(marked(this.data?.['::description'] || ''))}</span>
         ${this.data
-          ? html`
+          ? html`<span style='color:var(--red);'>*<span style='font-size:11px'> Required</span></span></br>
             ${this.generateTree(
               this.data['::type'] === 'array' ? this.data['::props'] : this.data,
               this.data['::type'],
@@ -221,7 +221,7 @@ export default class SchemaTree extends LitElement {
                 : schemaLevel > 0
                   ? html`<span class="key-label" title="${readOrWrite === 'readonly' ? 'Read-Only' : readOrWrite === 'writeonly' ? 'Write-Only' : ''}">
                       ${data['::deprecated'] ? '✗' : ''}
-                      ${keyLabel.replace(/\*$/, '')}${keyLabel.endsWith('*') ? html`<span style="color:var(--red)">*<span style="font-size:10px">required</span></span>` : ''}${readOrWrite === 'readonly' ? html` 🆁` : readOrWrite === 'writeonly' ? html` 🆆` : readOrWrite}:
+                      ${keyLabel.replace(/\*$/, '')}${keyLabel.endsWith('*') ? html`<span style="color:var(--red)">*</span>` : ''}${readOrWrite === 'readonly' ? html` 🆁` : readOrWrite === 'writeonly' ? html` 🆆` : readOrWrite}:
                     </span>`
                   : ''
             }
@@ -303,7 +303,7 @@ export default class SchemaTree extends LitElement {
         <div class="td key ${deprecated}" style='min-width:${minFieldColWidth}px'>
           ${deprecated ? html`<span style='color:var(--red);'>✗</span>` : ''}
           ${keyLabel.endsWith('*')
-            ? html`<span class="key-label">${keyLabel.substring(0, keyLabel.length - 1)}</span><span style='color:var(--red);'>*<span style="font-size:10px">required</span></span>:`
+            ? html`<span class="key-label">${keyLabel.substring(0, keyLabel.length - 1)}</span><span style='color:var(--red);'>*</span>:`
             : key.startsWith('::OPTION')
               ? html`<span class='key-label xxx-of-key'>${keyLabel}</span><span class="xxx-of-descr">${keyDescr}</span>`
               : html`<span class="key-label">${keyLabel}:</span>`
