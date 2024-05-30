@@ -109,7 +109,7 @@ export default class SchemaTree extends LitElement {
         </div>
         <span part="schema-description" class='m-markdown'> ${unsafeHTML(marked(this.data?.['::description'] || ''))}</span>
         ${this.data
-          ? html`
+          ? html`<span style='color:var(--red);'>*<span style='font-size:11px'> Required</span></span></br>
             ${this.generateTree(
               this.data['::type'] === 'array' ? this.data['::props'] : this.data,
               this.data['::type'],
