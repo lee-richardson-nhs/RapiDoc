@@ -401,15 +401,17 @@ export default class ApiRequest extends LitElement {
       <tr title="${param.deprecated ? 'Deprecated' : ''}"> 
         <td rowspan="${this.allowTry === 'true' ? '1' : '2'}" style="width:${labelColWidth}; min-width:100px;">
           <div class="param-name ${param.deprecated ? 'deprecated' : ''}" >
-            ${param.deprecated ? html`<span style='color:var(--red);'>✗</span>` : ''}
-            ${param.required ? html`<span style='color:var(--red)'>*</span>` : ''}
+            ${param.deprecated ? html`<span style='color:var(--red);'>✗</span>` : ''}            
             ${param.name}
           </div>
           <div class="param-type">
             ${paramSchema.type === 'array'
               ? `${paramSchema.arrayType}`
               : `${paramSchema.format ? paramSchema.format : paramSchema.type}`
-            }
+            }            
+          </div>
+          <div class="param-name" >
+          ${param.required ? html`<span style="color:var(--red)">required</span>` : ''}
           </div>
         </td>  
         ${this.allowTry === 'true'
