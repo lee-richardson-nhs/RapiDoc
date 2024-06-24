@@ -401,15 +401,17 @@ export default class ApiRequest extends LitElement {
       <tr title="${param.deprecated ? 'Deprecated' : ''}"> 
         <td rowspan="${this.allowTry === 'true' ? '1' : '2'}" style="width:${labelColWidth}; min-width:100px;">
           <div class="param-name ${param.deprecated ? 'deprecated' : ''}" >
-            ${param.deprecated ? html`<span style='color:var(--red);'>✗</span>` : ''}
-            ${param.required ? html`<span style='color:var(--red)'>*</span>` : ''}
+            ${param.deprecated ? html`<span style='color:var(--red);'>✗</span>` : ''}            
             ${param.name}
           </div>
           <div class="param-type">
             ${paramSchema.type === 'array'
               ? `${paramSchema.arrayType}`
               : `${paramSchema.format ? paramSchema.format : paramSchema.type}`
-            }
+            }            
+          </div>
+          <div class="param-name" >
+          ${param.required ? html`<span style="color:var(--red)">required</span>` : ''}
           </div>
         </td>  
         ${this.allowTry === 'true'
@@ -771,7 +773,7 @@ export default class ApiRequest extends LitElement {
     return html`
       <div class='request-body-container' data-selected-request-body-type="${this.selectedRequestBodyType}">
         <div class="table-title top-gap row">
-          REQUEST BODY ${this.request_body.required ? html`<span class="mono-font" style='color:var(--red)'>*</span>` : ''} 
+          REQUEST BODY
           <span style = "font-weight:normal; margin-left:5px"> ${this.selectedRequestBodyType}</span>
           <span style="flex:1"></span>
           ${reqBodyTypeSelectorHtml}
