@@ -601,4 +601,12 @@ export default css`
   .nhsd-m-table__mobile-list {
     margin-top: 15px;
   }
+
+    h2::before {
+        content: "";
+        display: block;
+        height: 100px; /* Adjust based on your fixed header's height */
+        margin-top: -100px; /* Same value as the height */
+        visibility: hidden;
+    }
 `;
