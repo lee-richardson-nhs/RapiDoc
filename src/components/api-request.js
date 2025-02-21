@@ -1016,8 +1016,7 @@ export default class ApiRequest extends LitElement {
   curlSyntaxTemplate(display = 'flex') {
     return html`
       <div class="col m-markdown" style="flex:1; display:${display}; position:relative; max-width: 100%;">
-        <button  class="toolbar-btn" style = "position:absolute; top:12px; right:8px; z-index:10;" 
-        @click='${(e) => { copyToClipboard(this.curlSyntax.replace(/\\$/, ''), e); }}' part="btn btn-fill"> Copy </button>
+        <button  class="toolbar-btn" style = "position:absolute; top:12px; right:8px; z-index:10;" @click='${(e) => { copyToClipboard(this.curlSyntax.replace(/\\$/, ''), e); }}' part="btn btn-fill"> Copy </button>
         <pre style="white-space:pre; padding-top: 50px;"><code>${unsafeHTML(Prism.highlight(this.curlSyntax.trim().replace(/\\$/, ''), Prism.languages.shell, 'shell'))}</code></pre>
       </div>
       `;
